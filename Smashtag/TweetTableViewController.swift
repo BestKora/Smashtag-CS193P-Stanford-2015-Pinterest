@@ -19,7 +19,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
             lastSuccessfulRequest = nil
             searchTextField?.text = searchText
             tweets.removeAll()
-            tableView.reloadData() // clear out the table view
+            tableView.reloadData() // очистка таблицы table view
             refresh()
         }
     }
