@@ -55,14 +55,17 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
     
     @IBAction private func refresh(sender: UIRefreshControl?) {
         if searchText != nil {
+            RecentSearches().add(searchText!)
             if let request = nextRequestToAttempt {
-                self.lastSuccessfulRequest = request // oops, forgot this line in lecture
+                self.lastSuccessfulRequest = request // oops, забыли эту строку в лекции
                 request.fetchTweets { (newTweets) -> Void in
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         if newTweets.count > 0 {
                             self.tweets.insert(newTweets, atIndex: 0)
                             self.tableView.reloadData()
-                            self.tableView.reloadSections(NSIndexSet(indexesInRange: NSMakeRange(0, self.tableView.numberOfSections())), withRowAnimation: .None)
+                            self.tableView.reloadSections(NSIndexSet(indexesInRange:
+                                    NSMakeRange(0, self.tableView.numberOfSections())),
+                                                                  withRowAnimation: .None)
                             sender?.endRefreshing()
                             self.title = self.searchText
                         }
@@ -100,6 +103,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
     private struct Storyboard {
         static let CellReuseIdentifier = "Tweet"
         static let mentionsSegueIdentifier = "Show Mentions"
+        static let KeywordSegueIdentifier = "From Keyword"
 
     }
     
@@ -124,16 +128,20 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
     
     // MARK: - Navigation
     
-    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
-        // cancel segue if zero mentions
-        if identifier == Storyboard.mentionsSegueIdentifier {
-            if let cell = sender as? TweetTableViewCell {
-                if cell.tweetMentionsCount == 0 {return false}
+    override func shouldPerformSegueWithIdentifier(identifier: String?,
+                                                       sender: AnyObject?) -> Bool {
+        if identifier == Storyboard.KeywordSegueIdentifier {
+            if let cell = sender as? UITableViewCell,
+                let url = cell.textLabel?.text where url.hasPrefix("http"){
+                  
+                        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+                        return false
+                
             }
         }
         return true
-        
     }
+
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         

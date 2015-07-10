@@ -123,6 +123,38 @@ class MentionsTableViewController: UITableViewController {
     
     // MARK: - Navitation
     
+    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+        if identifier == Storyboard.KeywordSegueIdentifier {
+            if let cell = sender as? UITableViewCell,
+                let url = cell.textLabel?.text where url.hasPrefix("http") {
+                    
+                    UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+                    return false
+            }
+        }
+        return true
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let identifier = segue.identifier {
+            if identifier == Storyboard.KeywordSegueIdentifier {
+                if let ttvc = segue.destinationViewController as? TweetTableViewController,
+                    let cell = sender as? UITableViewCell {
+                        
+                        ttvc.searchText = cell.textLabel?.text
+                        
+                }
+            } else if identifier == Storyboard.ImageSegueIdentifier {
+                if let ivc = segue.destinationViewController as? ImageViewController,
+                    let cell = sender as? ImageTableViewCell {
+                        
+                        ivc.imageURL = cell.imageUrl
+                        ivc.title = title
+                        
+                }
+            }
+        }
+    }
 
 
 }
