@@ -14,7 +14,10 @@ class TweetTableViewCell: UITableViewCell
 
     var tweet: Tweet? {
         didSet {
-             tweetMentionsCount = (tweet?.hashtags.count ?? 0) + (tweet?.urls.count ?? 0) + (tweet?.userMentions.count ?? 0) + (tweet?.media.count ?? 0)
+             tweetMentionsCount = (tweet?.hashtags.count ?? 0) +
+                                  (tweet?.urls.count ?? 0) +
+                                  (tweet?.userMentions.count ?? 0) +
+                                  (tweet?.media.count ?? 0)
             updateUI()
         }
   }
@@ -43,22 +46,9 @@ class TweetTableViewCell: UITableViewCell
         if let tweet = self.tweet
         {
             tweetTextLabel?.attributedText  = setTextLabel(tweet)
-            
             tweetScreenNameLabel?.text = "\(tweet.user)" // tweet.user.description
-            
-            if let profileImageURL = tweet.user.profileImageURL {
-                if let imageData = NSData(contentsOfURL: profileImageURL) { // blocks main thread!
-                    tweetProfileImageView?.image = UIImage(data: imageData)
-                }
-            }
-            
-            let formatter = NSDateFormatter()
-            if NSDate().timeIntervalSinceDate(tweet.created) > 24*60*60 {
-                formatter.dateStyle = NSDateFormatterStyle.ShortStyle
-            } else {
-                formatter.timeStyle = NSDateFormatterStyle.ShortStyle
-            }
-            tweetCreatedLabel?.text = formatter.stringFromDate(tweet.created)
+            setProfileImageView(tweet) // tweetProfileImageView updated asynchronously
+            tweetCreatedLabel?.text = setCreatedLabel(tweet)
         }
     }
     
@@ -74,6 +64,35 @@ class TweetTableViewCell: UITableViewCell
  
         return attribText
     }
+    
+    private func setCreatedLabel(tweet: Tweet) -> String {
+        let formatter = NSDateFormatter()
+        if NSDate().timeIntervalSinceDate(tweet.created) > 24*60*60 {
+            formatter.dateStyle = NSDateFormatterStyle.ShortStyle
+        } else {
+            formatter.timeStyle = NSDateFormatterStyle.ShortStyle
+        }
+        return formatter.stringFromDate(tweet.created)
+    }
+    
+    private func setProfileImageView(tweet: Tweet) {
+        if let profileImageURL = tweet.user.profileImageURL {
+            let qos = Int(QOS_CLASS_USER_INITIATED.value)
+            dispatch_async(dispatch_get_global_queue(qos, 0)) { () -> Void in
+                let imageData = NSData(contentsOfURL: profileImageURL)
+                dispatch_async(dispatch_get_main_queue()) {
+                    if profileImageURL == tweet.user.profileImageURL {
+                        if imageData != nil {
+                            self.tweetProfileImageView?.image = UIImage(data: imageData!)
+                        } else {
+                            self.tweetProfileImageView?.image = nil
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     
 }
 
