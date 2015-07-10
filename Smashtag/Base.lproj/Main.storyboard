@@ -75,7 +75,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e4l-lm-lY6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="42" y="246"/>
+            <point key="canvasLocation" x="48" y="238"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Z6w-vi-GIZ">
@@ -138,7 +138,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="4Gv-Hh-hvq" kind="show" identifier="Show Recent Search" id="sbv-KV-otG"/>
+                                    <segue destination="mVW-D4-npA" kind="show" identifier="Show Recent Search" id="Eou-wh-htJ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -253,7 +253,7 @@
             </objects>
             <point key="canvasLocation" x="-634" y="238"/>
         </scene>
-        <!--Tweets-->
+        <!--Tweets from Mentions Search-->
         <scene sceneID="dUY-eG-6No">
             <objects>
                 <tableViewController id="4Gv-Hh-hvq" customClass="TweetTableViewController" customModule="Smashtag" customModuleProvider="target" sceneMemberID="viewController">
@@ -338,7 +338,7 @@
                             <outlet property="delegate" destination="4Gv-Hh-hvq" id="OfA-sx-wBm"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Tweets" id="0VM-WK-fg6"/>
+                    <navigationItem key="navigationItem" title="Tweets from Mentions Search" id="0VM-WK-fg6"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="TUx-rY-mrW">
                         <autoresizingMask key="autoresizingMask"/>
                         <connections>
@@ -351,7 +351,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jME-rH-Hu9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="37" y="997"/>
+            <point key="canvasLocation" x="48" y="1007"/>
         </scene>
         <!--Image View Controller-->
         <scene sceneID="xc8-hx-ZD6">
@@ -389,7 +389,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k6h-0B-Kc6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="667" y="246"/>
+            <point key="canvasLocation" x="707" y="238"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hLG-SO-mzA">
@@ -412,7 +412,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="Eou-wh-htJ"/>
         <segue reference="VNZ-Oe-gUv"/>
-        <segue reference="aaV-ng-2Cx"/>
     </inferredMetricsTieBreakers>
 </document>
