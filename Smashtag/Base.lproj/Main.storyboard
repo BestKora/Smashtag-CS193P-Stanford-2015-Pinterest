@@ -5,7 +5,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Mensions-->
+        <!--Mentions-->
         <scene sceneID="hGM-lQ-Ej2">
             <objects>
                 <tableViewController id="Jf4-Cr-8cB" customClass="MentionsTableViewController" customModule="Smashtag" customModuleProvider="target" sceneMemberID="viewController">
@@ -62,7 +62,7 @@
                                 <connections>
                                     <outlet property="spinner" destination="Kgv-2V-eqh" id="hki-Iv-EAk"/>
                                     <outlet property="tweetImage" destination="FGA-Hc-fod" id="sYA-eT-6kS"/>
-                                    <segue destination="CDe-dN-MTK" kind="show" identifier="Show Image" id="jXs-Xl-xk8"/>
+                                    <segue destination="Jdk-m7-qbo" kind="show" identifier="Show Image" id="Kzj-e2-F2v"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -71,9 +71,16 @@
                             <outlet property="delegate" destination="Jf4-Cr-8cB" id="gVy-Gl-Kv1"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Mensions" id="yJ5-qm-VZW"/>
+                    <navigationItem key="navigationItem" title="Mentions" id="yJ5-qm-VZW">
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="H0V-j8-CHO">
+                            <connections>
+                                <segue destination="EtS-fm-gHi" kind="unwind" unwindAction="backToRoot:" id="CyW-lL-QJx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e4l-lm-lY6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="EtS-fm-gHi" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="48" y="238"/>
         </scene>
@@ -156,7 +163,7 @@
         <!--Search Twitter-->
         <scene sceneID="DyU-uY-240">
             <objects>
-                <tableViewController id="mVW-D4-npA" customClass="TweetTableViewController" customModule="Smashtag" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="mVW-D4-npA" customClass="RootTweetTableViewController" customModule="Smashtag" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="169" sectionHeaderHeight="22" sectionFooterHeight="22" id="Ej9-gc-Qdr">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -338,7 +345,13 @@
                             <outlet property="delegate" destination="4Gv-Hh-hvq" id="OfA-sx-wBm"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Tweets from Mentions Search" id="0VM-WK-fg6"/>
+                    <navigationItem key="navigationItem" title="Tweets from Mentions Search" id="0VM-WK-fg6">
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="gh6-F5-1bE">
+                            <connections>
+                                <segue destination="IlC-Ai-8R0" kind="unwind" unwindAction="backToRoot:" id="rYJ-5r-V1b"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="TUx-rY-mrW">
                         <autoresizingMask key="autoresizingMask"/>
                         <connections>
@@ -350,46 +363,9 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jME-rH-Hu9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="IlC-Ai-8R0" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="48" y="1007"/>
-        </scene>
-        <!--Image View Controller-->
-        <scene sceneID="xc8-hx-ZD6">
-            <objects>
-                <viewController id="CDe-dN-MTK" customClass="ImageViewController" customModule="Smashtag" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="e29-co-yE7"/>
-                        <viewControllerLayoutGuide type="bottom" id="Tko-TB-Tqt"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ny6-r0-Ayi">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2L3-0s-J0g">
-                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
-                            </scrollView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="E6l-xL-ZWq">
-                                <rect key="frame" x="290" y="290" width="20" height="20"/>
-                            </activityIndicatorView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="2L3-0s-J0g" firstAttribute="top" secondItem="e29-co-yE7" secondAttribute="bottom" id="Cpc-Gu-5nf"/>
-                            <constraint firstItem="2L3-0s-J0g" firstAttribute="leading" secondItem="Ny6-r0-Ayi" secondAttribute="leading" id="YeZ-h4-bfl"/>
-                            <constraint firstAttribute="trailing" secondItem="2L3-0s-J0g" secondAttribute="trailing" id="d21-fl-FiW"/>
-                            <constraint firstAttribute="centerY" secondItem="E6l-xL-ZWq" secondAttribute="centerY" id="hg8-Kb-hVG"/>
-                            <constraint firstItem="2L3-0s-J0g" firstAttribute="bottom" secondItem="Tko-TB-Tqt" secondAttribute="top" id="if6-tt-wIi"/>
-                            <constraint firstAttribute="centerX" secondItem="E6l-xL-ZWq" secondAttribute="centerX" id="xmG-F9-cJK"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="scrollView" destination="2L3-0s-J0g" id="1UV-9s-48o"/>
-                        <outlet property="spinner" destination="E6l-xL-ZWq" id="HHo-Z2-7lV"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="k6h-0B-Kc6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="707" y="238"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hLG-SO-mzA">
@@ -409,6 +385,47 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kau-2Y-ZxF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1331" y="997"/>
+        </scene>
+        <!--Image View-->
+        <scene sceneID="Sno-xu-obP">
+            <objects>
+                <viewController id="Jdk-m7-qbo" customClass="ImageViewController" customModule="Smashtag" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RHY-01-RJz"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ypx-Lu-WGC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UhG-rq-6cR">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IHw-9V-zEb">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IHw-9V-zEb" firstAttribute="bottom" secondItem="Ypx-Lu-WGC" secondAttribute="top" id="7TU-Ok-lLc"/>
+                            <constraint firstAttribute="trailing" secondItem="IHw-9V-zEb" secondAttribute="trailing" id="FSA-rd-nmC"/>
+                            <constraint firstItem="IHw-9V-zEb" firstAttribute="top" secondItem="RHY-01-RJz" secondAttribute="bottom" id="XCU-2F-wAS"/>
+                            <constraint firstItem="IHw-9V-zEb" firstAttribute="leading" secondItem="UhG-rq-6cR" secondAttribute="leading" id="n21-G8-hre"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" title="Image View" id="RpE-IG-IhD">
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="dX0-t7-b3q">
+                            <connections>
+                                <segue destination="2Rp-ai-eUZ" kind="unwind" unwindAction="backToRoot:" id="oNI-ls-khI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="scrollView" destination="IHw-9V-zEb" id="LZJ-UP-TmO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j3I-H1-sRi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="2Rp-ai-eUZ" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="694" y="238"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
