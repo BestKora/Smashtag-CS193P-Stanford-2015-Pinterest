@@ -78,6 +78,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="1zb-D6-9Da" kind="show" identifier="Show URL" id="JEW-eU-HKh"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e4l-lm-lY6" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="EtS-fm-gHi" userLabel="Exit" sceneMemberID="exit"/>
@@ -425,7 +428,55 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j3I-H1-sRi" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="2Rp-ai-eUZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="694" y="238"/>
+            <point key="canvasLocation" x="752" y="238"/>
+        </scene>
+        <!--Web View-->
+        <scene sceneID="IOQ-wB-UuY">
+            <objects>
+                <viewController id="1zb-D6-9Da" customClass="WebViewController" customModule="Smashtag" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="I5I-wM-ZT1"/>
+                        <viewControllerLayoutGuide type="bottom" id="CGU-Sk-ZKe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="EJL-en-7hO">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t47-Se-J9i">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Sky-lp-3qU">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                                <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="t47-Se-J9i" secondAttribute="bottom" id="2f4-wF-pyo"/>
+                            <constraint firstAttribute="trailing" secondItem="t47-Se-J9i" secondAttribute="trailing" id="AC2-44-wYh"/>
+                            <constraint firstItem="t47-Se-J9i" firstAttribute="top" secondItem="EJL-en-7hO" secondAttribute="top" id="NNm-SH-RcD"/>
+                            <constraint firstAttribute="centerX" secondItem="Sky-lp-3qU" secondAttribute="centerX" id="dfs-P7-s8f"/>
+                            <constraint firstAttribute="centerY" secondItem="Sky-lp-3qU" secondAttribute="centerY" id="oZ3-X0-XIn"/>
+                            <constraint firstItem="t47-Se-J9i" firstAttribute="leading" secondItem="EJL-en-7hO" secondAttribute="leading" id="z8s-e5-7kO"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Web View" id="J1u-Ti-KCY">
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="g8Y-lk-c6S">
+                            <connections>
+                                <segue destination="yoq-ck-kfd" kind="unwind" unwindAction="backToRoot:" id="aVo-h8-oIy"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="spinner" destination="Sky-lp-3qU" id="BLB-5a-exh"/>
+                        <outlet property="webView" destination="t47-Se-J9i" id="U4f-q5-prX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CVE-6i-ROI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="yoq-ck-kfd" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="752" y="997"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

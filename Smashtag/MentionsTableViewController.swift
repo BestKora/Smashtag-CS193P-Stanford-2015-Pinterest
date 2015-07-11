@@ -127,8 +127,10 @@ class MentionsTableViewController: UITableViewController {
         if identifier == Storyboard.KeywordSegueIdentifier {
             if let cell = sender as? UITableViewCell,
                 let url = cell.textLabel?.text where url.hasPrefix("http") {
+                    // UIApplication.sharedApplication().openURL(NSURL(string: url)!)
                     
-                    UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+                    performSegueWithIdentifier(Storyboard.WebSegueIdentifier, sender: sender)
+                  
                     return false
             }
         }
@@ -158,7 +160,16 @@ class MentionsTableViewController: UITableViewController {
                         ivc.title = title
                         
                 }
+            }else if identifier == Storyboard.WebSegueIdentifier {
+                if let wvc = segue.destinationViewController as? WebViewController {
+                    if let cell = sender as? UITableViewCell {
+                        if let url = cell.textLabel?.text {
+                            wvc.url = NSURL(string: url)
+                        }
+                    }
+                }
             }
+
         }
     }
 
