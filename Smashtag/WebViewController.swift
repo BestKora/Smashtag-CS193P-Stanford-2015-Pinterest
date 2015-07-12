@@ -26,7 +26,9 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         if let actualURL = url {
             let urlRequest = NSURLRequest(URL: actualURL)
             webView.scalesPageToFit = true
+            
             webView.allowsInlineMediaPlayback = true
+            
             webView.loadRequest(urlRequest)
         }
         
