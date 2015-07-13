@@ -14,6 +14,8 @@
 		E4EBE3EA1B4EDF6B00FE55B5 /* RecentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EBE3E91B4EDF6B00FE55B5 /* RecentsTableViewController.swift */; };
 		E4EBE4051B50004D00FE55B5 /* RootTweetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EBE4041B50004D00FE55B5 /* RootTweetTableViewController.swift */; };
 		E4EBE4071B5038E300FE55B5 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EBE4061B5038E300FE55B5 /* WebViewController.swift */; };
+		E4EBE40B1B52633500FE55B5 /* ImageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EBE40A1B52633500FE55B5 /* ImageCollectionViewController.swift */; };
+		E4EBE40D1B526A8200FE55B5 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EBE40C1B526A8200FE55B5 /* ImageCollectionViewCell.swift */; };
 		EC6876171A898EF4006B5FDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6876161A898EF4006B5FDB /* AppDelegate.swift */; };
 		EC68761C1A898EF4006B5FDB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC68761A1A898EF4006B5FDB /* Main.storyboard */; };
 		EC68761E1A898EF4006B5FDB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC68761D1A898EF4006B5FDB /* Images.xcassets */; };
@@ -45,6 +47,8 @@
 		E4EBE3E91B4EDF6B00FE55B5 /* RecentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentsTableViewController.swift; sourceTree = "<group>"; };
 		E4EBE4041B50004D00FE55B5 /* RootTweetTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootTweetTableViewController.swift; sourceTree = "<group>"; };
 		E4EBE4061B5038E300FE55B5 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		E4EBE40A1B52633500FE55B5 /* ImageCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewController.swift; sourceTree = "<group>"; };
+		E4EBE40C1B526A8200FE55B5 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		EC6876111A898EF4006B5FDB /* Smashtag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smashtag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC6876151A898EF4006B5FDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC6876161A898EF4006B5FDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +115,8 @@
 				EC6876411A8994BB006B5FDB /* TweetTableViewCell.swift */,
 				E4DB83FB1B4AAEFA0016D86D /* ImageTableViewCell.swift */,
 				E4EBE3E71B4ED5E400FE55B5 /* RecentSearches.swift */,
+				E4EBE40A1B52633500FE55B5 /* ImageCollectionViewController.swift */,
+				E4EBE40C1B526A8200FE55B5 /* ImageCollectionViewCell.swift */,
 				EC6876381A898FC6006B5FDB /* Twitter */,
 				EC6876141A898EF4006B5FDB /* Supporting Files */,
 			);
@@ -205,6 +211,7 @@
 				TargetAttributes = {
 					EC6876101A898EF4006B5FDB = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = QLY879YR3Y;
 					};
 					EC6876251A898EF4006B5FDB = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -256,7 +263,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4EBE40B1B52633500FE55B5 /* ImageCollectionViewController.swift in Sources */,
 				E4DB83FA1B4A92070016D86D /* MentionsTableViewController.swift in Sources */,
+				E4EBE40D1B526A8200FE55B5 /* ImageCollectionViewCell.swift in Sources */,
 				EC6876171A898EF4006B5FDB /* AppDelegate.swift in Sources */,
 				E4EBE3E61B4C4BF000FE55B5 /* ImageViewController.swift in Sources */,
 				EC68763F1A898FC6006B5FDB /* TwitterRequest.swift in Sources */,
@@ -394,6 +403,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Smashtag/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -404,6 +414,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Smashtag/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

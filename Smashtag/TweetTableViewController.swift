@@ -30,11 +30,17 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
         super.viewDidLoad()
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
-        refresh()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        if tweets.count == 0 {
+            refresh()
+        } else {
+            // делаем установки для случая единственного tweet
+            searchTextField.text = " "
+            let tweet = tweets.first!.first!
+            title = "Tweet by " + tweet.user.name
+            tableView.reloadSections(NSIndexSet(indexesInRange:
+                               NSMakeRange(0, tableView.numberOfSections())),
+                                              withRowAnimation: .None)
+        }
     }
     
     // MARK: - Refreshing
@@ -102,9 +108,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
     
     private struct Storyboard {
         static let CellReuseIdentifier = "Tweet"
-        static let mentionsSegueIdentifier = "Show Mentions"
-        static let KeywordSegueIdentifier = "From Keyword"
-
+        static let MentionsIdentifier = "Show Mentions"
     }
     
     // MARK: - UITableViewDataSource
@@ -128,33 +132,28 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
     
     // MARK: - Navigation
     
-    override func shouldPerformSegueWithIdentifier(identifier: String?,
-                                                       sender: AnyObject?) -> Bool {
-        if identifier == Storyboard.KeywordSegueIdentifier {
-            if let cell = sender as? UITableViewCell,
-                let url = cell.textLabel?.text where url.hasPrefix("http"){
-                  
-                        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
-                        return false
-                
+
+    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+        if identifier == Storyboard.MentionsIdentifier {
+            if let tweetCell = sender as? TweetTableViewCell {
+                if tweetCell.tweet!.hashtags.count + tweetCell.tweet!.urls.count + tweetCell.tweet!.userMentions.count + tweetCell.tweet!.media.count == 0 {
+                    return false
+                }
             }
         }
         return true
     }
+ 
 
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
         if let identifier = segue.identifier {
-            switch identifier {
-            case Storyboard.mentionsSegueIdentifier:
-                if let cell = sender as? TweetTableViewCell {
-                    let mtvc = segue.destinationViewController as! MentionsTableViewController
-                    mtvc.tweet = cell.tweet
+            if identifier == Storyboard.MentionsIdentifier {
+                if let mtvc = segue.destinationViewController as? MentionsTableViewController {
+                    if let tweetCell = sender as? TweetTableViewCell {
+                        mtvc.tweet = tweetCell.tweet
+                    }
                 }
-             default: break
-            }
+            } 
         }
     }
-
 }
