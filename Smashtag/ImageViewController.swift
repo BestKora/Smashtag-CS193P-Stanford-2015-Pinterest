@@ -58,7 +58,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate
         }
     }
     
-    @IBOutlet private weak var spinner: UIActivityIndicatorView!
+   
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet private weak var scrollView: UIScrollView! {
         didSet {
             scrollView.contentSize = imageView.frame.size // critical to set this!

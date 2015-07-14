@@ -5,7 +5,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Image Collection View Controller-->
+        <!--Images-->
         <scene sceneID="B0Y-jJ-QKQ">
             <objects>
                 <collectionViewController id="Lp8-jg-zlz" customClass="ImageCollectionViewController" customModule="Smashtag" customModuleProvider="target" sceneMemberID="viewController">
@@ -29,7 +29,7 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fkX-45-Ed6">
                                             <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
                                         </imageView>
-                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Q89-ZI-mRb">
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Q89-ZI-mRb">
                                             <rect key="frame" x="50" y="50" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
@@ -55,8 +55,16 @@
                             <outlet property="delegate" destination="Lp8-jg-zlz" id="gZM-VL-3Nc"/>
                         </connections>
                     </collectionView>
+                    <navigationItem key="navigationItem" title="Images" id="add-ve-0Jf">
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="oro-mN-M7o">
+                            <connections>
+                                <segue destination="Tgn-lx-DcI" kind="unwind" unwindAction="backToRoot:" id="gH4-4b-Y4T"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bKD-KM-h90" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Tgn-lx-DcI" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="79" y="-514"/>
         </scene>
@@ -460,12 +468,17 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IHw-9V-zEb">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                             </scrollView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DHL-Rv-6at">
+                                <rect key="frame" x="290" y="234" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="IHw-9V-zEb" firstAttribute="bottom" secondItem="Ypx-Lu-WGC" secondAttribute="top" id="7TU-Ok-lLc"/>
                             <constraint firstAttribute="trailing" secondItem="IHw-9V-zEb" secondAttribute="trailing" id="FSA-rd-nmC"/>
                             <constraint firstItem="IHw-9V-zEb" firstAttribute="top" secondItem="RHY-01-RJz" secondAttribute="bottom" id="XCU-2F-wAS"/>
+                            <constraint firstAttribute="centerX" secondItem="DHL-Rv-6at" secondAttribute="centerX" id="dgc-Im-GrG"/>
+                            <constraint firstAttribute="centerY" secondItem="DHL-Rv-6at" secondAttribute="centerY" id="drR-HT-PXC"/>
                             <constraint firstItem="IHw-9V-zEb" firstAttribute="leading" secondItem="UhG-rq-6cR" secondAttribute="leading" id="n21-G8-hre"/>
                         </constraints>
                     </view>
@@ -479,6 +492,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="scrollView" destination="IHw-9V-zEb" id="LZJ-UP-TmO"/>
+                        <outlet property="spinner" destination="DHL-Rv-6at" id="X3o-Rr-Qf0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j3I-H1-sRi" userLabel="First Responder" sceneMemberID="firstResponder"/>

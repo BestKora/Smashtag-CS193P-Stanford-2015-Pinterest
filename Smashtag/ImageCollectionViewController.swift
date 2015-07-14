@@ -16,8 +16,10 @@ public struct TweetMedia: Printable
     public var description: String { return "\(tweet): \(media)" }
 }
 
-class ImageCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-
+class ImageCollectionViewController: UICollectionViewController,
+                                     UICollectionViewDelegateFlowLayout,
+                                     CHTCollectionViewDelegateWaterfallLayout
+{
     var tweets: [[Tweet]] = [] {
         didSet {
            images = tweets.flatMap({$0})
@@ -27,31 +29,53 @@ class ImageCollectionViewController: UICollectionViewController, UICollectionVie
     }
 
     private var images = [TweetMedia]()
-    
-    
     private var cache = NSCache()
-    
     
     private struct Constants {
         static let CellReuseIdentifier = "Image Cell"
         static let SegueIdentifier = "Show Tweet"
+        static let SizeSetting = CGSize(width: 120.0, height: 120.0)
+        
+        static let ColumnCountWaterfall = 3
+        static let minimumColumnSpacing:CGFloat = 2
+        static let minimumInteritemSpacing:CGFloat = 2
     }
 
-    var scale: CGFloat = 1 {
+    private var scale: CGFloat = 1 {
         didSet {
             collectionView?.collectionViewLayout.invalidateLayout()
         }
     }
     
     // MARK: Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.addGestureRecognizer(UIPinchGestureRecognizer(target: self,
-                                                                      action: "zoom:"))
+        
+        // Установка Waterfall Layout
+        setupWaterfallCollectionViewLayout()
+
+        collectionView?.addGestureRecognizer(
+            UIPinchGestureRecognizer(target: self, action: "zoom:"))
     }
     
-    func zoom(gesture: UIPinchGestureRecognizer) {
+    //MARK: - Настройка Waterfall layout CollectionView
+    private func setupWaterfallCollectionViewLayout(){
+        
+        // Создаем waterfall layout
+        var layout = CHTCollectionViewWaterfallLayout()
+        
+        // Меняем атрибуты для зазоров между ячейками и строками и
+        // количество столбцов - основной параметр настройки
+        
+        layout.columnCount = Constants.ColumnCountWaterfall
+        layout.minimumColumnSpacing = Constants.minimumColumnSpacing
+        layout.minimumInteritemSpacing = Constants.minimumInteritemSpacing
+        
+        // устанавливаем Waterfall layout нашему collection view
+        collectionView?.collectionViewLayout = layout
+    }
+
+   func zoom(gesture: UIPinchGestureRecognizer) {
         if gesture.state == .Changed {
             scale *= gesture.scale
             gesture.scale = 1.0
@@ -80,18 +104,22 @@ class ImageCollectionViewController: UICollectionViewController, UICollectionVie
         return cell
     }
 
-    // MARK: UICollectionViewDelegateFlowLayout
+    // MARK: UICollectionViewDelegateFlowLayout и CHTCollectionViewWaterfallLayout
 
-    
     func collectionView(collectionView: UICollectionView,
            layout collectionViewLayout: UICollectionViewLayout,
       sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
+
+        if collectionView.collectionViewLayout is CHTCollectionViewWaterfallLayout{
+            let newColumnNumber = Int(CGFloat(Constants.ColumnCountWaterfall) / scale)
+            (collectionView.collectionViewLayout
+                    as! CHTCollectionViewWaterfallLayout).columnCount =
+                                              newColumnNumber < 1 ? 1 :newColumnNumber
+        }
         let ratio = CGFloat(images[indexPath.row].media.aspectRatio)
         let maxCellWidth = collectionView.bounds.size.width
-        let sizeSetting = (collectionViewLayout as! UICollectionViewFlowLayout).itemSize
-      
-        var size = CGSize(width: sizeSetting.width * scale, height: sizeSetting.height * scale)
+        var size = CGSize(width: Constants.SizeSetting.width * scale,
+                         height: Constants.SizeSetting.height * scale)
         if ratio > 1 {
             size.height /= ratio
         } else {
@@ -103,6 +131,7 @@ class ImageCollectionViewController: UICollectionViewController, UICollectionVie
         }
         return size
     }
+    
     
     // MARK: - Navigation
     
