@@ -30,6 +30,8 @@ class ImageCollectionViewController: UICollectionViewController,
 
     private var images = [TweetMedia]()
     private var cache = NSCache()
+    private var layoutFlow = UICollectionViewFlowLayout()
+    private var layoutWaterfall = CHTCollectionViewWaterfallLayout()
     
     private struct Constants {
         static let CellReuseIdentifier = "Image Cell"
@@ -39,6 +41,10 @@ class ImageCollectionViewController: UICollectionViewController,
         static let ColumnCountWaterfall = 3
         static let minimumColumnSpacing:CGFloat = 2
         static let minimumInteritemSpacing:CGFloat = 2
+        
+        static let minimumLineSpacing:CGFloat = 2
+        static let minimumInteritemSpacingFlow:CGFloat = 2
+        static let sectionInset = UIEdgeInsets (top: 2, left: 2, bottom: 2, right: 2)
     }
 
     private var scale: CGFloat = 1 {
@@ -51,27 +57,57 @@ class ImageCollectionViewController: UICollectionViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Установка Waterfall Layout
-        setupWaterfallCollectionViewLayout()
-
+         // Добавляем правую кнопку для переключения layouts
+        let imageButton = UIBarButtonItem(barButtonSystemItem: .Reply,
+            target: self,
+            action: "changeLayout:")
+        if let existingButton = navigationItem.rightBarButtonItem {
+            navigationItem.rightBarButtonItems = [existingButton, imageButton]
+        } else {
+            navigationItem.rightBarButtonItem = imageButton
+        }
+        
+        // Установка Layout
+        setupLayout()
+        
+        // Добавляем распознаватель жестов
         collectionView?.addGestureRecognizer(
             UIPinchGestureRecognizer(target: self, action: "zoom:"))
     }
     
-    //MARK: - Настройка Waterfall layout CollectionView
-    private func setupWaterfallCollectionViewLayout(){
+    func changeLayout(sender: UIBarButtonItem) {
         
-        // Создаем waterfall layout
-        var layout = CHTCollectionViewWaterfallLayout()
+        if let currentLayout = collectionView?.collectionViewLayout {
+             if currentLayout is CHTCollectionViewWaterfallLayout {
+                collectionView?.setCollectionViewLayout(layoutFlow, animated: true)
+            }else {
+                collectionView?.setCollectionViewLayout(layoutWaterfall, animated: true)
+            }
+        }
+    }
+    
+    //MARK: - Настройка Layout CollectionView
+    private func setupLayout(){
         
-        // Меняем атрибуты для зазоров между ячейками и строками и
-        // количество столбцов - основной параметр настройки        
-        layout.columnCount = Constants.ColumnCountWaterfall
-        layout.minimumColumnSpacing = Constants.minimumColumnSpacing
-        layout.minimumInteritemSpacing = Constants.minimumInteritemSpacing
+        // Меняем атрибуты для WaterfallLayout
+        
+        // зазоры между ячейками и строками и
+        // количество столбцов - основной параметр настройки 
+        
+        layoutWaterfall.columnCount = Constants.ColumnCountWaterfall
+        layoutWaterfall.minimumColumnSpacing = Constants.minimumColumnSpacing
+        layoutWaterfall.minimumInteritemSpacing = Constants.minimumInteritemSpacing
+        
+         // Меняем атрибуты для FlowLayout
+        // зазоры между ячейками и строками и
+        // зазоры для секции
+        
+        layoutFlow.minimumInteritemSpacing = Constants.minimumInteritemSpacingFlow
+        layoutFlow.minimumLineSpacing = Constants.minimumLineSpacing
+        layoutFlow.sectionInset = Constants.sectionInset
         
         // устанавливаем Waterfall layout нашему collection view
-        collectionView?.collectionViewLayout = layout
+        collectionView?.collectionViewLayout = layoutWaterfall
     }
 
    func zoom(gesture: UIPinchGestureRecognizer) {
@@ -109,7 +145,7 @@ class ImageCollectionViewController: UICollectionViewController,
            layout collectionViewLayout: UICollectionViewLayout,
       sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
 
-        if collectionView.collectionViewLayout is CHTCollectionViewWaterfallLayout{
+            if collectionView.collectionViewLayout is CHTCollectionViewWaterfallLayout{
             let newColumnNumber = Int(CGFloat(Constants.ColumnCountWaterfall) / scale)
             (collectionView.collectionViewLayout
                     as! CHTCollectionViewWaterfallLayout).columnCount =
@@ -130,7 +166,6 @@ class ImageCollectionViewController: UICollectionViewController,
         }
         return size
     }
-    
     
     // MARK: - Navigation
     
