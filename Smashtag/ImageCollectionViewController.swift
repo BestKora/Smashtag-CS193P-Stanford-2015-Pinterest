@@ -65,8 +65,7 @@ class ImageCollectionViewController: UICollectionViewController,
         var layout = CHTCollectionViewWaterfallLayout()
         
         // Меняем атрибуты для зазоров между ячейками и строками и
-        // количество столбцов - основной параметр настройки
-        
+        // количество столбцов - основной параметр настройки        
         layout.columnCount = Constants.ColumnCountWaterfall
         layout.minimumColumnSpacing = Constants.minimumColumnSpacing
         layout.minimumInteritemSpacing = Constants.minimumInteritemSpacing
